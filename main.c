@@ -13,7 +13,7 @@ int main(int num_args, char **args) {
     }
 
     memset(input_string, 0, INPUT_STRING_MAXLEN + 1);
-    memset(postfix_view, 0, INPUT_STRING_MAXLEN + 1);
+    memset(postfix_view, 0, 2 * INPUT_STRING_MAXLEN + 1);
 
     //make from many arguments one string without spaces
     int input_length = normalize_input(input_string, num_args, args);
