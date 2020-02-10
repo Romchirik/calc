@@ -6,17 +6,25 @@
 
 char input_string[INPUT_STRING_MAXLEN + 1];
 char postfix_view[2 * INPUT_STRING_MAXLEN + 1];
+char pre_input[INPUT_STRING_MAXLEN + 1];
 
-int main(int num_args, char **args) {
-    if (num_args == 1) {
-        return 0;
-    }
+int main() {
 
     memset(input_string, 0, INPUT_STRING_MAXLEN + 1);
     memset(postfix_view, 0, 2 * INPUT_STRING_MAXLEN + 1);
-
-    //make from many arguments one string without spaces
-    int input_length = normalize_input(input_string, num_args, args);
+    gets(pre_input);
+    int input_length = 0;
+    for (int i = 0; (i < INPUT_STRING_MAXLEN) && (pre_input[i] != '\0'); i++) {
+        if (pre_input[i] != ' ') {
+            input_string[input_length] = pre_input[i];
+            input_length++;
+        }
+    }
+    input_string[input_length] = '\0';
+    if (input_length == 0){
+        return 0;
+    }
+    input_length++;
 
     convert_to_postfix_view(postfix_view, input_string, input_length);
     printf("%d\n", calculate_result(postfix_view));

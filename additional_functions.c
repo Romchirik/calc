@@ -3,17 +3,6 @@
 #include "stack_stuff.h"
 #include <stdio.h>
 
-int normalize_input(char *result, int num_args, char **args) {
-    int lenght = 0;
-
-    for (int i = 1; i < num_args; i++) {
-        strcpy(result + lenght, args[i]);
-        lenght += strlen(args[i]);
-    }
-
-    return lenght;
-}
-
 int convert_to_postfix_view(char *result, char *target, int target_length) {
     int result_length = 0;
     Stack_s *Stack = stack_initialize();
@@ -50,7 +39,7 @@ int convert_to_postfix_view(char *result, char *target, int target_length) {
                 break;
             case '-':
                 if (i == 0) {
-                    printf("Invalid input (use unary - with '(' and ')'");
+                    printf("Invalid input (use unary - with '(' and ')'\n");
                     clear_stack(Stack);
                     free(Stack);
                     exit(0);
