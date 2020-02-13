@@ -57,7 +57,7 @@ int is_empty(Stack_s *S) { //return 1 if stack is empty, and 0 if there is some 
 }
 
 struct list_f {
-    double data;
+    long double data;
     struct list_f *next;
 };
 
@@ -81,15 +81,15 @@ Stack_sf *stack_initialize_f() { // returns an empty stack
     return S;
 }
 
-double get_top_f(Stack_sf *S) { //return top value of stack
+long double get_top_f(Stack_sf *S) { //return top value of stack
     if (S->top)
         return (S->top->data);
     else
         return 0;
 }
 
-double pop_f(Stack_sf *S) { //delete top stack value and returns it
-    double data;
+long double pop_f(Stack_sf *S) { //delete top stack value and returns it
+    long double data;
     struct list_f *tmp_top;
 
     tmp_top = S->top;
@@ -100,7 +100,7 @@ double pop_f(Stack_sf *S) { //delete top stack value and returns it
     return data;
 }
 
-void push_f(double value, Stack_sf *S) { //puts value of value (lol) in top of stack S
+void push_f(long double value, Stack_sf *S) { //puts value of value (lol) in top of stack S
     struct list_f *p;
     p = (struct list_f *) malloc(sizeof(struct list_f));
     p->data = value;

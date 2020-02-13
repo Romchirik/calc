@@ -3,6 +3,7 @@
 #include "stack_stuff.h"
 #include <stdio.h>
 
+
 int convert_to_postfix_view(char *result, char *target, int target_length) {
     int result_length = 0;
     Stack_s *Stack = stack_initialize();
@@ -109,41 +110,41 @@ int convert_to_postfix_view(char *result, char *target, int target_length) {
     return result_length;
 }
 
-int calculate_result(char *postfix_view) {
-    Stack_s *Stack = stack_initialize();
+double calculate_result(char *postfix_view) {
+    Stack_sf *Stack = stack_initialize_f();
 
-    int operand1, operand2;
+    long double operand1, operand2;
     for (int i = 0; (i < 2000) && (postfix_view[i] != '\0'); i++) {
         switch (postfix_view[i]) {
             case '+':
-                operand2 = pop(Stack);
-                operand1 = pop(Stack);
-                push(operand1 + operand2, Stack);
+                operand2 = pop_f(Stack);
+                operand1 = pop_f(Stack);
+                push_f(operand1 + operand2, Stack);
                 break;
             case '-':
-                operand2 = pop(Stack);
-                operand1 = pop(Stack);
-                push(operand1 - operand2, Stack);
+                operand2 = pop_f(Stack);
+                operand1 = pop_f(Stack);
+                push_f(operand1 - operand2, Stack);
                 break;
             case '*':
-                operand2 = pop(Stack);
-                operand1 = pop(Stack);
-                push(operand1 * operand2, Stack);
+                operand2 = pop_f(Stack);
+                operand1 = pop_f(Stack);
+                push_f(operand1 * operand2, Stack);
                 break;
             case '/':
-                operand2 = pop(Stack);
-                operand1 = pop(Stack);
+                operand2 = pop_f(Stack);
+                operand1 = pop_f(Stack);
                 if (operand2 == 0) {
                     printf("Division by zero, terminating...\n");
-                    clear_stack(Stack);
+                    clear_stack_f(Stack);
                     free(Stack);
                     exit(0);
                 }
-                push(operand1 / operand2, Stack);
+                push_f(operand1 / operand2, Stack);
                 break;
             case '?':
-                operand1 = pop(Stack);
-                push(0 - operand1, Stack);
+                operand1 = pop_f(Stack);
+                push_f(0 - operand1, Stack);
                 break;
             case ' ':
                 continue;
@@ -168,13 +169,13 @@ int calculate_result(char *postfix_view) {
                     power *= 10;
                 }
 
-                push(tmp_number, Stack);
+                push_f(tmp_number, Stack);
                 memset(number_to_translate, 0, 15);
             }
         }
     }
-    int r = pop(Stack);
-    clear_stack(Stack);
+    long double r = pop_f(Stack);
+    clear_stack_f(Stack);
     free(Stack);
     return r;
 }

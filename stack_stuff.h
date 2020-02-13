@@ -16,4 +16,19 @@ void push(int value, Stack_s *S);
 
 int is_empty(Stack_s *S);
 
+struct list_f;
+typedef struct stack_f Stack_sf;
+
+void clear_stack_f(Stack_sf *S);
+
+Stack_sf *stack_initialize_f();
+
+long double get_top_f(Stack_sf *S);
+
+long double pop_f(Stack_sf *S);
+
+void push_f(long double value, Stack_sf *S);
+
+int is_empty_f(Stack_sf *S);
+
 #endif //CALC_STACK_STUFF_H

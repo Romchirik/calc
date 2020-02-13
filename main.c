@@ -3,6 +3,7 @@
 #include "additional_functions.h"
 
 #define INPUT_STRING_MAXLEN 1000
+#define SIGNIFICANT_DIGITS 10
 
 char input_string[INPUT_STRING_MAXLEN + 1];
 char postfix_view[2 * INPUT_STRING_MAXLEN + 1];
@@ -21,12 +22,12 @@ int main() {
         }
     }
     input_string[input_length] = '\0';
-    if (input_length == 0){
+    if (input_length == 0) {
         return 0;
     }
     input_length++;
 
     convert_to_postfix_view(postfix_view, input_string, input_length);
-    printf("%d\n", calculate_result(postfix_view));
+    printf("%.10f\n", calculate_result(postfix_view));
     return 0;
 }
