@@ -23,11 +23,11 @@ void clear_stack_f(Stack_sf *S);
 
 Stack_sf *stack_initialize_f();
 
-long double get_top_f(Stack_sf *S);
+double get_top_f(Stack_sf *S);
 
-long double pop_f(Stack_sf *S);
+double pop_f(Stack_sf *S);
 
-void push_f(long double value, Stack_sf *S);
+void push_f(double value, Stack_sf *S);
 
 int is_empty_f(Stack_sf *S);
 

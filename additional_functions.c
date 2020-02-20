@@ -3,6 +3,17 @@
 #include "stack_stuff.h"
 #include <stdio.h>
 
+int normalize_input(char *result, int num_args, char **args) {
+    int lenght = 0;
+
+    for (int i = 1; i < num_args; i++) {
+        strcpy(result + lenght, args[i]);
+        lenght += strlen(args[i]);
+    }
+
+
+    return lenght;
+}
 
 int convert_to_postfix_view(char *result, char *target, int target_length) {
     int result_length = 0;
@@ -28,7 +39,8 @@ int convert_to_postfix_view(char *result, char *target, int target_length) {
             case '+':
                 while (1) {
                     int tmp = get_top(Stack);
-                    if (((tmp == '-') || (tmp == '+') || (tmp == '*') || (tmp == '/')) && (!is_empty(Stack))) {
+                    if (((tmp == '-') || (tmp == '+') || (tmp == '*') || (tmp == '/') || (tmp == '?')) &&
+                        (!is_empty(Stack))) {
                         result[result_length + 1] = ' ';
                         result[result_length] = pop(Stack);
                         result_length += 2;
@@ -40,13 +52,12 @@ int convert_to_postfix_view(char *result, char *target, int target_length) {
                 break;
             case '-':
                 if (i == 0) {
-                    printf("Invalid input (use unary - with '(' and ')'\n");
-                    clear_stack(Stack);
-                    free(Stack);
-                    exit(0);
+                    push('?', Stack);
+                    break;
                 } else if (target[i - 1] == '(') {
                     push('?', Stack);
                     break;
+
                 }
                 while (1) {
                     int tmp = get_top(Stack);
@@ -87,8 +98,10 @@ int convert_to_postfix_view(char *result, char *target, int target_length) {
                     }
                 }
                 break;
+            case ' ':
+                continue;
             default:
-                while ((47 < target[i]) && (target[i] < 57)) {
+                while (('0' <= target[i]) && (target[i] <= '9')) {
                     result[result_length] = target[i];
                     result_length++;
                     i++;
@@ -114,7 +127,7 @@ double calculate_result(char *postfix_view) {
     Stack_sf *Stack = stack_initialize_f();
 
     long double operand1, operand2;
-    for (int i = 0; (i < 2000) && (postfix_view[i] != '\0'); i++) {
+    for (int i = 0; (i < 500010) && (postfix_view[i] != '\0'); i++) {
         switch (postfix_view[i]) {
             case '+':
                 operand2 = pop_f(Stack);
@@ -144,33 +157,23 @@ double calculate_result(char *postfix_view) {
                 break;
             case '?':
                 operand1 = pop_f(Stack);
-                push_f(0 - operand1, Stack);
+                push_f((-operand1), Stack);
                 break;
             case ' ':
                 continue;
             default: {
-                short int number_len = 0;
+                char number[20] = {0};
+                char digits_counter = 0;
                 int tmp_number = 0;
-                int power = 1;
-                char number_to_translate[15];
 
-                number_to_translate[number_len] = postfix_view[i];
-                number_len++;
-                i++;
-
-                while ((postfix_view[i] != ' ') && (postfix_view[i] != '\0')) {
-                    number_to_translate[number_len] = postfix_view[i];
+                while ('0' <= (postfix_view[i]) && (postfix_view[i] <= '9')) {
+                    number[digits_counter] = postfix_view[i];
+                    digits_counter++;
                     i++;
-                    number_len++;
                 }
-
-                for (int j = number_len - 1; j >= 0; j--) {
-                    tmp_number += (number_to_translate[j] - 48) * power;
-                    power *= 10;
-                }
-
+                tmp_number = atoi(number);
                 push_f(tmp_number, Stack);
-                memset(number_to_translate, 0, 15);
+
             }
         }
     }

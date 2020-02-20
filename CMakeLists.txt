@@ -3,4 +3,4 @@ project(calc C)
 
 set(CMAKE_C_STANDARD 99)
 
-add_executable(calc main.c stack_stuff.c stack_stuff.h additional_functions.c additional_functions.h)
+add_executable(calc main.c additional_functions.c additional_functions.h stack_stuff.c stack_stuff.h)
